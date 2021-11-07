@@ -2,9 +2,12 @@
 let timerInput = document.getElementById("time");
 let buttonRun = document.getElementById("start");
 let timerShow = document.getElementById("timer");
+let buttonPause = document.getElementById("stop");
+let stopTime;
+
 buttonRun.addEventListener('click', function () {
-    let timeMinut = parseInt(timerInput.value) * 60;
-    let timer = setInterval(function () {
+    let timeMinut = stopTime || parseInt(timerInput.value) * 60;
+    var timer = setInterval(function Start() {
         let seconds = timeMinut % 60
         let minutes = timeMinut / 60 % 60
         let hour = timeMinut / 60 / 60 % 60
@@ -14,7 +17,6 @@ buttonRun.addEventListener('click', function () {
                 src: ['../sound/Radar.mp3'],
                 volume: 0.8
             });
-
             sound.play();
 
         } else {
@@ -22,8 +24,12 @@ buttonRun.addEventListener('click', function () {
             timerShow.innerHTML = strTimer;
         }
         --timeMinut;
-    }, 1000)
+    }, 1000);
+
+    buttonPause.addEventListener('click', function () {
+        clearInterval(timer);
+        stopTime = timeMinut;
+    })
+
 
 })
-
-
